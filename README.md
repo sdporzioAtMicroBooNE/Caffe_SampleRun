@@ -8,11 +8,12 @@ A sample environment to start playing with Caffe.
 ---
 
 *Before getting started*, if you have no idea what Caffe does, or some of the details are lost to you, take a look at this great intuitive short introductions to Multi-Layer Perceptrons and CNN:
+
 [Multi-Layer Perceptrons Tutorial](https://ujjwalkarn.me/2016/08/09/quick-intro-neural-networks/)
+
 [Convolutional Neural Network Tutorial](https://ujjwalkarn.me/2016/08/11/intuitive-explanation-convnets/)
 
-And if you want to know how all that applies to Caffe, please take a look at these short Caffe tutorial: [Caffe Tutorial](https://docs.google.com/presentation/d/1HxGdeq8MPktHaPb-rlmYYQ723iWzq9ur6Gjo71YiG0Y/edit#slide=id.g109e849287_6_515)
-Take also a look at their *Tour* section: [Caffe Tour](http://caffe.berkeleyvision.org/tutorial/)
+And if you want to know how all that applies to Caffe, please take a look at these short [Caffe Tutorial Slides](https://docs.google.com/presentation/d/1HxGdeq8MPktHaPb-rlmYYQ723iWzq9ur6Gjo71YiG0Y/edit#slide=id.g109e849287_6_515) and at their [Tour](http://caffe.berkeleyvision.org/tutorial/) section.
 
 ---
 
