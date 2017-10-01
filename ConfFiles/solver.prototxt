@@ -1,5 +1,5 @@
 
-train_net: "proto.prototxt"
+train_net: "ConfFiles/proto.prototxt"
 iter_size: 4
 
 base_lr: 0.0003

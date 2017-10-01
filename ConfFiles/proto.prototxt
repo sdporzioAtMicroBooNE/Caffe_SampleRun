@@ -8,7 +8,7 @@ layer {
   root_data_param {
     batch_size: 40
     #Yale
-    filler_config: "train.cfg"
+    filler_config: "ConfFiles/train.cfg"
     filler_name: "DataFiller"
   }
 }
