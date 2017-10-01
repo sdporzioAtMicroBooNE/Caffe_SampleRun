@@ -6,24 +6,23 @@ from ROOT import larcv
 from time import sleep, time
 from math import floor
 
+# Load file paths from arguments and save current timestamp
 if len(sys.argv) < 2:
   print "Error! Need to provide prototxt and h5 files!"
   exit()
-
 prototxtFile = sys.argv[1]
 h5File = sys.argv[2]
-
-#iteration = int(sys.argv[1])
-
 t0 = time()
-print 'Step1';
-#net = caffe.Net("sig_prototxt/jhewes_vgg16b_sig_{}.prototxt".format(iteration),
-               # "vgg16b_iter_100.caffemodel.h5",
-              #  caffe.TEST)
-net = caffe.Net(prototxtFile,
-               h5File,
-                caffe.TEST)
-print 'Step2';
+
+# Load the network
+print 'Step1. Loading the caffe network'
+#net = caffe.Net("sig_prototxt/jhewes_vgg16b_sig_{}.prototxt".format(iteration),"vgg16b_iter_100.caffemodel.h5",caffe.TEST)
+net = caffe.Net(prototxtFile,h5File,caffe.TEST)
+t = time()
+print "Checkpoint 1: Done initialising network. Step time: %.1f" %(t-t0); t0 = t
+
+# Load LArCV sample events
+print 'Step2. Loading events.'
 caffe.set_mode_gpu()
 caffe.set_device(0)
 
@@ -40,50 +39,49 @@ for f in filler.pd().io().file_list():
   myio.add_in_file(f)
 myio.initialize()
 
-t = time()
-print "Checkpoint 1: Done initialising network. Timestamp is {}".format(t-t0)
-
-#f = open('evt_lists/sig_eventlist_{}.txt'.format(iteration),'w')
-addName = h5File.split('.')[0]
-f = open('ScoreFiles/eventtlist_%s.txt' %(addName),'w')
-print 'step3';
+n_evts = 5
 for i in xrange(n_evts):
   myio.read_entry(i)
   d = myio.get_data(0)
-  run    = d.run()
-  subrun = d.subrun()
-  event  = d.event()
-  f.write("{} {} {}\n".format(run,subrun,event))
-f.close()
 
 t = time()
-print "Checkpoint 2: Done writing event numbers to file. Timestamp is {}".format(t-t0)
+print "Checkpoint 2: Done loading events. Step time: %.1f" %(t-t0); t0 = t
 
+
+# Extract data
+print 'Step3. Loading data from each event.'
+# Opening output files
+addName = h5File.split('/')[-1].split('.')[0]
 scores = []
+run = []
+subrun = []
+event = []
 batch_counter = 0
-evts_per_batch = 20
+evts_per_batch = 1
 max_batch = floor(n_evts/evts_per_batch)
 
-DIV = 100
-
-while batch_counter < int(max_batch):
-
+while batch_counter < max_batch:
   t = time()
-  print "Processing batch {} of {}. Timestamp is {}".format(batch_counter+1,max_batch,t-t0)
+  print "Processing batch {} of {}. Timestamp is {}".format(int(batch_counter+1),int(max_batch),t-t0)
   net.forward()
   while filler.thread_running():
     sleep(0.001)
-  #print net.blobs;
-  for a in net.blobs["softmax"].data:
-  #for a in net.blobs["fc6"].data:
+  for i,a in enumerate(net.blobs["softmax"].data):
+    c_run = int(filler.processed_events()[i].run())
+    c_subrun = int(filler.processed_events()[i].subrun())
+    c_event = int(filler.processed_events()[i].event())
+    print i, a
     scores.append(float(a[0]))
+    run.append(c_run)
+    subrun.append(c_subrun)
+    event.append(c_event)
   batch_counter += 1
 
-  if batch_counter % DIV ==0:
-    res = pd.Series(scores)
-#res.to_pickle("data/sig_scores_{}.pkl".format(iteration))
-    res.to_pickle("ScoreFiles/scores_%s.pkl" %addName)
+f2 = open('ScoreFiles/scorelist_%s.txt' %addName,'w')
+for i in range (len(event)):
+    f2.write("{} {} {} {}\n".format(run,subrun,event,scores))
+f2.close()
 
 t = time()
-print "Checkpoint 3: Done writing scores to file. Timestamp is {}".format(t-t0)
+print "Checkpoint 2: Done loading events. Step time: %.1f" %(t-t0); t0 = t
 

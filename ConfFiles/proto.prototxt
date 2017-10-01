@@ -6,7 +6,7 @@ layer {
   top: "label"
 
   root_data_param {
-    batch_size: 40
+    batch_size: 20
     #Yale
     filler_config: "ConfFiles/train.cfg"
     filler_name: "DataFiller"
@@ -488,9 +488,8 @@ layer {
 }
 
 layer {
-  name: "loss"
-  type: "SoftmaxWithLoss"
+  name: "sofmax"
+  type: "Softmax"
   bottom: "fc6"
-  bottom: "label"
-  top: "loss"
+  top: "softmax"
 }

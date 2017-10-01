@@ -1,4 +1,3 @@
-
 train_net: "ConfFiles/proto.prototxt"
 iter_size: 4
 
@@ -15,8 +14,8 @@ gamma: 0.00001
 power: 0.75
 display: 1
 max_iter: 100000
-snapshot: 250
-snapshot_prefix: "vgg16b"
+snapshot: 5
+snapshot_prefix: "Snapshots/vgg16b"
 snapshot_format: HDF5
 solver_mode: GPU
 type: "RMSProp"
