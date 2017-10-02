@@ -14,7 +14,7 @@ gamma: 0.00001
 power: 0.75
 display: 1
 max_iter: 100000
-snapshot: 5
+snapshot: 250
 snapshot_prefix: "Snapshots/vgg16b"
 snapshot_format: HDF5
 solver_mode: GPU

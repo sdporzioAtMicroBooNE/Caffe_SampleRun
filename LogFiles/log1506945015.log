@@ -1,0 +1,1275 @@
+I1002 12:50:15.282263 32741 caffe.cpp:217] Using GPUs 0
+I1002 12:50:15.294107 32741 caffe.cpp:222] GPU 0: Tesla K40c
+I1002 12:50:15.598058 32741 solver.cpp:48] Initializing solver from parameters: 
+train_net: "ConfFiles/proto.prototxt"
+base_lr: 0.0003
+display: 1
+max_iter: 100000
+lr_policy: "inv"
+gamma: 1e-05
+power: 0.75
+momentum: 0
+weight_decay: 0.001
+snapshot: 250
+snapshot_prefix: "Snapshots/vgg16b"
+solver_mode: GPU
+device_id: 0
+train_state {
+  level: 0
+  stage: ""
+}
+iter_size: 4
+snapshot_format: HDF5
+rms_decay: 0.9
+type: "RMSProp"
+I1002 12:50:15.598377 32741 solver.cpp:81] Creating training net from train_net file: ConfFiles/proto.prototxt
+I1002 12:50:15.599462 32741 net.cpp:58] Initializing net from parameters: 
+name: "VGG16b"
+state {
+  phase: TRAIN
+  level: 0
+  stage: ""
+}
+layer {
+  name: "data"
+  type: "ROOTData"
+  top: "data"
+  top: "label"
+  root_data_param {
+    batch_size: 20
+    filler_config: "ConfFiles/train.cfg"
+    filler_name: "DataFiller"
+  }
+}
+layer {
+  name: "conv1_1"
+  type: "Convolution"
+  bottom: "data"
+  top: "conv1_1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 64
+    pad: 1
+    kernel_size: 3
+    stride: 2
+    weight_filler {
+      type: "msra"
+    }
+  }
+}
+layer {
+  name: "relu1_1"
+  type: "ReLU"
+  bottom: "conv1_1"
+  top: "conv1_1"
+}
+layer {
+  name: "conv1_2"
+  type: "Convolution"
+  bottom: "conv1_1"
+  top: "conv1_2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 64
+    pad: 1
+    kernel_size: 3
+    stride: 1
+    weight_filler {
+      type: "msra"
+    }
+  }
+}
+layer {
+  name: "relu1_2"
+  type: "ReLU"
+  bottom: "conv1_2"
+  top: "conv1_2"
+}
+layer {
+  name: "pool1"
+  type: "Pooling"
+  bottom: "conv1_2"
+  top: "pool1"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "conv2_1"
+  type: "Convolution"
+  bottom: "pool1"
+  top: "conv2_1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 128
+    pad: 1
+    kernel_size: 3
+    weight_filler {
+      type: "msra"
+    }
+  }
+}
+layer {
+  name: "relu2_1"
+  type: "ReLU"
+  bottom: "conv2_1"
+  top: "conv2_1"
+}
+layer {
+  name: "conv2_2"
+  type: "Convolution"
+  bottom: "conv2_1"
+  top: "conv2_2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 128
+    pad: 1
+    kernel_size: 3
+    weight_filler {
+      type: "msra"
+    }
+  }
+}
+layer {
+  name: "relu2_2"
+  type: "ReLU"
+  bottom: "conv2_2"
+  top: "conv2_2"
+}
+layer {
+  name: "pool2"
+  type: "Pooling"
+  bottom: "conv2_2"
+  top: "pool2"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "conv3_1"
+  type: "Convolution"
+  bottom: "pool2"
+  top: "conv3_1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+    weight_filler {
+      type: "msra"
+    }
+  }
+}
+layer {
+  name: "relu3_1"
+  type: "ReLU"
+  bottom: "conv3_1"
+  top: "conv3_1"
+}
+layer {
+  name: "conv3_2"
+  type: "Convolution"
+  bottom: "conv3_1"
+  top: "conv3_2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+    weight_filler {
+      type: "msra"
+    }
+  }
+}
+layer {
+  name: "relu3_2"
+  type: "ReLU"
+  bottom: "conv3_2"
+  top: "conv3_2"
+}
+layer {
+  name: "conv3_3"
+  type: "Convolution"
+  bottom: "conv3_2"
+  top: "conv3_3"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+    weight_filler {
+      type: "msra"
+    }
+  }
+}
+layer {
+  name: "relu3_3"
+  type: "ReLU"
+  bottom: "conv3_3"
+  top: "conv3_3"
+}
+layer {
+  name: "pool3"
+  type: "Pooling"
+  bottom: "conv3_3"
+  top: "pool3"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "conv4_1"
+  type: "Convolution"
+  bottom: "pool3"
+  top: "conv4_1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+    weight_filler {
+      type: "msra"
+    }
+  }
+}
+layer {
+  name: "relu4_1"
+  type: "ReLU"
+  bottom: "conv4_1"
+  top: "conv4_1"
+}
+layer {
+  name: "conv4_2"
+  type: "Convolution"
+  bottom: "conv4_1"
+  top: "conv4_2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+    weight_filler {
+      type: "msra"
+    }
+  }
+}
+layer {
+  name: "relu4_2"
+  type: "ReLU"
+  bottom: "conv4_2"
+  top: "conv4_2"
+}
+layer {
+  name: "conv4_3"
+  type: "Convolution"
+  bottom: "conv4_2"
+  top: "conv4_3"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+    weight_filler {
+      type: "msra"
+    }
+  }
+}
+layer {
+  name: "relu4_3"
+  type: "ReLU"
+  bottom: "conv4_3"
+  top: "conv4_3"
+}
+layer {
+  name: "pool4"
+  type: "Pooling"
+  bottom: "conv4_3"
+  top: "pool4"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "conv5_1"
+  type: "Convolution"
+  bottom: "pool4"
+  top: "conv5_1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+    weight_filler {
+      type: "msra"
+    }
+  }
+}
+layer {
+  name: "relu5_1"
+  type: "ReLU"
+  bottom: "conv5_1"
+  top: "conv5_1"
+}
+layer {
+  name: "conv5_2"
+  type: "Convolution"
+  bottom: "conv5_1"
+  top: "conv5_2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+    weight_filler {
+      type: "msra"
+    }
+  }
+}
+layer {
+  name: "relu5_2"
+  type: "ReLU"
+  bottom: "conv5_2"
+  top: "conv5_2"
+}
+layer {
+  name: "conv5_3"
+  type: "Convolution"
+  bottom: "conv5_2"
+  top: "conv5_3"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+    weight_filler {
+      type: "msra"
+    }
+  }
+}
+layer {
+  name: "relu5_3"
+  type: "ReLU"
+  bottom: "conv5_3"
+  top: "conv5_3"
+}
+layer {
+  name: "pool5"
+  type: "Pooling"
+  bottom: "conv5_3"
+  top: "pool5"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "fc6"
+  type: "InnerProduct"
+  bottom: "pool5"
+  top: "fc6"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 5
+    weight_filler {
+      type: "msra"
+    }
+  }
+}
+layer {
+  name: "acc"
+  type: "Accuracy"
+  bottom: "fc6"
+  bottom: "label"
+  top: "acc"
+}
+layer {
+  name: "sofmax"
+  type: "Softmax"
+  bottom: "fc6"
+  top: "softmax"
+}
+I1002 12:50:15.599674 32741 layer_factory.hpp:77] Creating layer data
+I1002 12:50:15.599705 32741 net.cpp:100] Creating Layer data
+I1002 12:50:15.599715 32741 net.cpp:408] data -> data
+I1002 12:50:15.599756 32741 net.cpp:408] data -> label
+[93m setting verbosity [00m2
+    [95m[NORMAL][00m [0m [94m<DataFillerProcessDriver::configure>[00m Instantiating Process ID=0 Type: SimpleFiller w/ Name: SimpleFiller
+Error in <TCling::RegisterModule>: cannot find dictionary module PMTWeightsDict_rdict.pcm
+Error in <TCling::RegisterModule>: cannot find dictionary module ImageAnaDict_rdict.pcm
+Error in <TCling::RegisterModule>: cannot find dictionary module UBWireToolDict_rdict.pcm
+Error in <TCling::RegisterModule>: cannot find dictionary module dbscanDict_rdict.pcm
+Error in <TCling::RegisterModule>: cannot find dictionary module FilterDict_rdict.pcm
+Error in <TCling::RegisterModule>: cannot find dictionary module DataFormatDict_rdict.pcm
+Error in <TCling::RegisterModule>: cannot find dictionary module VertexImgDict_rdict.pcm
+Error in <TCling::RegisterModule>: cannot find dictionary module CPPUtilDict_rdict.pcm
+Error in <TCling::RegisterModule>: cannot find dictionary module MergerDict_rdict.pcm
+Error in <TCling::RegisterModule>: cannot find dictionary module ImageModDict_rdict.pcm
+Error in <TCling::RegisterModule>: cannot find dictionary module BaseDict_rdict.pcm
+Error in <TCling::RegisterModule>: cannot find dictionary module APICaffeDict_rdict.pcm
+Error in <TCling::RegisterModule>: cannot find dictionary module ANNDict_rdict.pcm
+Error in <TCling::RegisterModule>: cannot find dictionary module PyUtilDict_rdict.pcm
+Error in <TCling::RegisterModule>: cannot find dictionary module ProcessorDict_rdict.pcm
+    [95m[NORMAL][00m [0m [94m<DataFillerIOManager::prepare_input>[00m Opening a file in READ mode: /data/LArCNN/Samples_LArCV/HeavySterileNeutrinos_DecayMuPi_Mass0.3_EventSize50k/Training/larcv_Signal_Constrain_0.root
+    [95m[NORMAL][00m [0m [94m<DataFillerIOManager::prepare_input>[00m Opening a file in READ mode: /data/LArCNN/Samples_LArCV/HeavySterileNeutrinos_DecayMuPi_Mass0.3_EventSize50k/Training/larcv_Signal_Constrain_1.root
+    [95m[NORMAL][00m [0m [94m<DataFillerIOManager::prepare_input>[00m Opening a file in READ mode: /data/LArCNN/Samples_LArCV/HeavySterileNeutrinos_DecayMuPi_Mass0.3_EventSize50k/Training/larcv_Signal_Constrain_2.root
+    [95m[NORMAL][00m [0m [94m<DataFillerIOManager::prepare_input>[00m Opening a file in READ mode: /data/LArCNN/Samples_LArCV/BNB_NuMu_EventSize50k/Training/larcv_Background_Constrain_0.root
+    [95m[NORMAL][00m [0m [94m<DataFillerIOManager::prepare_input>[00m Opening a file in READ mode: /data/LArCNN/Samples_LArCV/BNB_NuMu_EventSize50k/Training/larcv_Background_Constrain_1.root
+    [95m[NORMAL][00m [0m [94m<DataFillerIOManager::prepare_input>[00m Opening a file in READ mode: /data/LArCNN/Samples_LArCV/BNB_NuMu_EventSize50k/Training/larcv_Background_Constrain_2.root
+    [95m[NORMAL][00m [0m [94m<DataFillerIOManager::initialize>[00m Prepared input with 72744 entries...
+I1002 12:50:17.988932 32741 heproot.cpp:20] Queuing data... (1 sec.)
+I1002 12:50:19.264930 32741 heproot.cpp:20] Queuing data... (2 sec.)
+I1002 12:50:20.537969 32741 heproot.cpp:20] Queuing data... (3 sec.)
+I1002 12:50:21.810611 32741 heproot.cpp:20] Queuing data... (4 sec.)
+I1002 12:50:23.084020 32741 heproot.cpp:20] Queuing data... (5 sec.)
+I1002 12:50:23.199215 32741 net.cpp:150] Setting up data
+I1002 12:50:23.199270 32741 net.cpp:157] Top shape: 20 1 512 512 (5242880)
+I1002 12:50:23.199281 32741 net.cpp:157] Top shape: 20 (20)
+I1002 12:50:23.199287 32741 net.cpp:165] Memory required for data: 20971600
+I1002 12:50:23.199306 32741 layer_factory.hpp:77] Creating layer conv1_1
+I1002 12:50:23.199357 32741 net.cpp:100] Creating Layer conv1_1
+I1002 12:50:23.199369 32741 net.cpp:434] conv1_1 <- data
+I1002 12:50:23.199407 32741 net.cpp:408] conv1_1 -> conv1_1
+I1002 12:50:23.201472 32741 net.cpp:150] Setting up conv1_1
+I1002 12:50:23.201514 32741 net.cpp:157] Top shape: 20 64 256 256 (83886080)
+I1002 12:50:23.201522 32741 net.cpp:165] Memory required for data: 356515920
+I1002 12:50:23.201560 32741 layer_factory.hpp:77] Creating layer relu1_1
+I1002 12:50:23.201576 32741 net.cpp:100] Creating Layer relu1_1
+I1002 12:50:23.201586 32741 net.cpp:434] relu1_1 <- conv1_1
+I1002 12:50:23.201596 32741 net.cpp:395] relu1_1 -> conv1_1 (in-place)
+I1002 12:50:23.201612 32741 net.cpp:150] Setting up relu1_1
+I1002 12:50:23.201622 32741 net.cpp:157] Top shape: 20 64 256 256 (83886080)
+I1002 12:50:23.201629 32741 net.cpp:165] Memory required for data: 692060240
+I1002 12:50:23.201635 32741 layer_factory.hpp:77] Creating layer conv1_2
+I1002 12:50:23.201652 32741 net.cpp:100] Creating Layer conv1_2
+I1002 12:50:23.201658 32741 net.cpp:434] conv1_2 <- conv1_1
+I1002 12:50:23.201668 32741 net.cpp:408] conv1_2 -> conv1_2
+I1002 12:50:23.202288 32741 net.cpp:150] Setting up conv1_2
+I1002 12:50:23.202301 32741 net.cpp:157] Top shape: 20 64 256 256 (83886080)
+I1002 12:50:23.202308 32741 net.cpp:165] Memory required for data: 1027604560
+I1002 12:50:23.202327 32741 layer_factory.hpp:77] Creating layer relu1_2
+I1002 12:50:23.202363 32741 net.cpp:100] Creating Layer relu1_2
+I1002 12:50:23.202370 32741 net.cpp:434] relu1_2 <- conv1_2
+I1002 12:50:23.202380 32741 net.cpp:395] relu1_2 -> conv1_2 (in-place)
+I1002 12:50:23.202391 32741 net.cpp:150] Setting up relu1_2
+I1002 12:50:23.202401 32741 net.cpp:157] Top shape: 20 64 256 256 (83886080)
+I1002 12:50:23.202409 32741 net.cpp:165] Memory required for data: 1363148880
+I1002 12:50:23.202417 32741 layer_factory.hpp:77] Creating layer pool1
+I1002 12:50:23.202435 32741 net.cpp:100] Creating Layer pool1
+I1002 12:50:23.202441 32741 net.cpp:434] pool1 <- conv1_2
+I1002 12:50:23.202451 32741 net.cpp:408] pool1 -> pool1
+I1002 12:50:23.202522 32741 net.cpp:150] Setting up pool1
+I1002 12:50:23.202535 32741 net.cpp:157] Top shape: 20 64 128 128 (20971520)
+I1002 12:50:23.202541 32741 net.cpp:165] Memory required for data: 1447034960
+I1002 12:50:23.202548 32741 layer_factory.hpp:77] Creating layer conv2_1
+I1002 12:50:23.202566 32741 net.cpp:100] Creating Layer conv2_1
+I1002 12:50:23.202574 32741 net.cpp:434] conv2_1 <- pool1
+I1002 12:50:23.202586 32741 net.cpp:408] conv2_1 -> conv2_1
+I1002 12:50:23.204690 32741 net.cpp:150] Setting up conv2_1
+I1002 12:50:23.204706 32741 net.cpp:157] Top shape: 20 128 128 128 (41943040)
+I1002 12:50:23.204712 32741 net.cpp:165] Memory required for data: 1614807120
+I1002 12:50:23.204730 32741 layer_factory.hpp:77] Creating layer relu2_1
+I1002 12:50:23.204741 32741 net.cpp:100] Creating Layer relu2_1
+I1002 12:50:23.204749 32741 net.cpp:434] relu2_1 <- conv2_1
+I1002 12:50:23.204759 32741 net.cpp:395] relu2_1 -> conv2_1 (in-place)
+I1002 12:50:23.204771 32741 net.cpp:150] Setting up relu2_1
+I1002 12:50:23.204782 32741 net.cpp:157] Top shape: 20 128 128 128 (41943040)
+I1002 12:50:23.204788 32741 net.cpp:165] Memory required for data: 1782579280
+I1002 12:50:23.204797 32741 layer_factory.hpp:77] Creating layer conv2_2
+I1002 12:50:23.204814 32741 net.cpp:100] Creating Layer conv2_2
+I1002 12:50:23.204821 32741 net.cpp:434] conv2_2 <- conv2_1
+I1002 12:50:23.204833 32741 net.cpp:408] conv2_2 -> conv2_2
+I1002 12:50:23.206593 32741 net.cpp:150] Setting up conv2_2
+I1002 12:50:23.206607 32741 net.cpp:157] Top shape: 20 128 128 128 (41943040)
+I1002 12:50:23.206614 32741 net.cpp:165] Memory required for data: 1950351440
+I1002 12:50:23.206627 32741 layer_factory.hpp:77] Creating layer relu2_2
+I1002 12:50:23.206642 32741 net.cpp:100] Creating Layer relu2_2
+I1002 12:50:23.206650 32741 net.cpp:434] relu2_2 <- conv2_2
+I1002 12:50:23.206660 32741 net.cpp:395] relu2_2 -> conv2_2 (in-place)
+I1002 12:50:23.206672 32741 net.cpp:150] Setting up relu2_2
+I1002 12:50:23.206682 32741 net.cpp:157] Top shape: 20 128 128 128 (41943040)
+I1002 12:50:23.206689 32741 net.cpp:165] Memory required for data: 2118123600
+I1002 12:50:23.206696 32741 layer_factory.hpp:77] Creating layer pool2
+I1002 12:50:23.206707 32741 net.cpp:100] Creating Layer pool2
+I1002 12:50:23.206727 32741 net.cpp:434] pool2 <- conv2_2
+I1002 12:50:23.206737 32741 net.cpp:408] pool2 -> pool2
+I1002 12:50:23.206778 32741 net.cpp:150] Setting up pool2
+I1002 12:50:23.206789 32741 net.cpp:157] Top shape: 20 128 64 64 (10485760)
+I1002 12:50:23.206794 32741 net.cpp:165] Memory required for data: 2160066640
+I1002 12:50:23.206801 32741 layer_factory.hpp:77] Creating layer conv3_1
+I1002 12:50:23.206816 32741 net.cpp:100] Creating Layer conv3_1
+I1002 12:50:23.206823 32741 net.cpp:434] conv3_1 <- pool2
+I1002 12:50:23.206835 32741 net.cpp:408] conv3_1 -> conv3_1
+I1002 12:50:23.211315 32741 net.cpp:150] Setting up conv3_1
+I1002 12:50:23.211333 32741 net.cpp:157] Top shape: 20 256 64 64 (20971520)
+I1002 12:50:23.211339 32741 net.cpp:165] Memory required for data: 2243952720
+I1002 12:50:23.211360 32741 layer_factory.hpp:77] Creating layer relu3_1
+I1002 12:50:23.211376 32741 net.cpp:100] Creating Layer relu3_1
+I1002 12:50:23.211385 32741 net.cpp:434] relu3_1 <- conv3_1
+I1002 12:50:23.211395 32741 net.cpp:395] relu3_1 -> conv3_1 (in-place)
+I1002 12:50:23.211407 32741 net.cpp:150] Setting up relu3_1
+I1002 12:50:23.211418 32741 net.cpp:157] Top shape: 20 256 64 64 (20971520)
+I1002 12:50:23.211426 32741 net.cpp:165] Memory required for data: 2327838800
+I1002 12:50:23.211431 32741 layer_factory.hpp:77] Creating layer conv3_2
+I1002 12:50:23.211447 32741 net.cpp:100] Creating Layer conv3_2
+I1002 12:50:23.211454 32741 net.cpp:434] conv3_2 <- conv3_1
+I1002 12:50:23.211467 32741 net.cpp:408] conv3_2 -> conv3_2
+I1002 12:50:23.219187 32741 net.cpp:150] Setting up conv3_2
+I1002 12:50:23.219202 32741 net.cpp:157] Top shape: 20 256 64 64 (20971520)
+I1002 12:50:23.219209 32741 net.cpp:165] Memory required for data: 2411724880
+I1002 12:50:23.219223 32741 layer_factory.hpp:77] Creating layer relu3_2
+I1002 12:50:23.219235 32741 net.cpp:100] Creating Layer relu3_2
+I1002 12:50:23.219244 32741 net.cpp:434] relu3_2 <- conv3_2
+I1002 12:50:23.219254 32741 net.cpp:395] relu3_2 -> conv3_2 (in-place)
+I1002 12:50:23.219266 32741 net.cpp:150] Setting up relu3_2
+I1002 12:50:23.219276 32741 net.cpp:157] Top shape: 20 256 64 64 (20971520)
+I1002 12:50:23.219283 32741 net.cpp:165] Memory required for data: 2495610960
+I1002 12:50:23.219290 32741 layer_factory.hpp:77] Creating layer conv3_3
+I1002 12:50:23.219307 32741 net.cpp:100] Creating Layer conv3_3
+I1002 12:50:23.219316 32741 net.cpp:434] conv3_3 <- conv3_2
+I1002 12:50:23.219326 32741 net.cpp:408] conv3_3 -> conv3_3
+I1002 12:50:23.226991 32741 net.cpp:150] Setting up conv3_3
+I1002 12:50:23.227007 32741 net.cpp:157] Top shape: 20 256 64 64 (20971520)
+I1002 12:50:23.227013 32741 net.cpp:165] Memory required for data: 2579497040
+I1002 12:50:23.227031 32741 layer_factory.hpp:77] Creating layer relu3_3
+I1002 12:50:23.227047 32741 net.cpp:100] Creating Layer relu3_3
+I1002 12:50:23.227056 32741 net.cpp:434] relu3_3 <- conv3_3
+I1002 12:50:23.227066 32741 net.cpp:395] relu3_3 -> conv3_3 (in-place)
+I1002 12:50:23.227078 32741 net.cpp:150] Setting up relu3_3
+I1002 12:50:23.227089 32741 net.cpp:157] Top shape: 20 256 64 64 (20971520)
+I1002 12:50:23.227097 32741 net.cpp:165] Memory required for data: 2663383120
+I1002 12:50:23.227102 32741 layer_factory.hpp:77] Creating layer pool3
+I1002 12:50:23.227113 32741 net.cpp:100] Creating Layer pool3
+I1002 12:50:23.227120 32741 net.cpp:434] pool3 <- conv3_3
+I1002 12:50:23.227130 32741 net.cpp:408] pool3 -> pool3
+I1002 12:50:23.227177 32741 net.cpp:150] Setting up pool3
+I1002 12:50:23.227190 32741 net.cpp:157] Top shape: 20 256 32 32 (5242880)
+I1002 12:50:23.227195 32741 net.cpp:165] Memory required for data: 2684354640
+I1002 12:50:23.227201 32741 layer_factory.hpp:77] Creating layer conv4_1
+I1002 12:50:23.227221 32741 net.cpp:100] Creating Layer conv4_1
+I1002 12:50:23.227228 32741 net.cpp:434] conv4_1 <- pool3
+I1002 12:50:23.227241 32741 net.cpp:408] conv4_1 -> conv4_1
+I1002 12:50:23.242347 32741 net.cpp:150] Setting up conv4_1
+I1002 12:50:23.242388 32741 net.cpp:157] Top shape: 20 512 32 32 (10485760)
+I1002 12:50:23.242394 32741 net.cpp:165] Memory required for data: 2726297680
+I1002 12:50:23.242457 32741 layer_factory.hpp:77] Creating layer relu4_1
+I1002 12:50:23.242475 32741 net.cpp:100] Creating Layer relu4_1
+I1002 12:50:23.242485 32741 net.cpp:434] relu4_1 <- conv4_1
+I1002 12:50:23.242499 32741 net.cpp:395] relu4_1 -> conv4_1 (in-place)
+I1002 12:50:23.242516 32741 net.cpp:150] Setting up relu4_1
+I1002 12:50:23.242525 32741 net.cpp:157] Top shape: 20 512 32 32 (10485760)
+I1002 12:50:23.242532 32741 net.cpp:165] Memory required for data: 2768240720
+I1002 12:50:23.242538 32741 layer_factory.hpp:77] Creating layer conv4_2
+I1002 12:50:23.242557 32741 net.cpp:100] Creating Layer conv4_2
+I1002 12:50:23.242563 32741 net.cpp:434] conv4_2 <- conv4_1
+I1002 12:50:23.242575 32741 net.cpp:408] conv4_2 -> conv4_2
+I1002 12:50:23.273572 32741 net.cpp:150] Setting up conv4_2
+I1002 12:50:23.273610 32741 net.cpp:157] Top shape: 20 512 32 32 (10485760)
+I1002 12:50:23.273617 32741 net.cpp:165] Memory required for data: 2810183760
+I1002 12:50:23.273643 32741 layer_factory.hpp:77] Creating layer relu4_2
+I1002 12:50:23.273669 32741 net.cpp:100] Creating Layer relu4_2
+I1002 12:50:23.273679 32741 net.cpp:434] relu4_2 <- conv4_2
+I1002 12:50:23.273695 32741 net.cpp:395] relu4_2 -> conv4_2 (in-place)
+I1002 12:50:23.273712 32741 net.cpp:150] Setting up relu4_2
+I1002 12:50:23.273722 32741 net.cpp:157] Top shape: 20 512 32 32 (10485760)
+I1002 12:50:23.273730 32741 net.cpp:165] Memory required for data: 2852126800
+I1002 12:50:23.273736 32741 layer_factory.hpp:77] Creating layer conv4_3
+I1002 12:50:23.273753 32741 net.cpp:100] Creating Layer conv4_3
+I1002 12:50:23.273759 32741 net.cpp:434] conv4_3 <- conv4_2
+I1002 12:50:23.273772 32741 net.cpp:408] conv4_3 -> conv4_3
+I1002 12:50:23.307621 32741 net.cpp:150] Setting up conv4_3
+I1002 12:50:23.307657 32741 net.cpp:157] Top shape: 20 512 32 32 (10485760)
+I1002 12:50:23.307664 32741 net.cpp:165] Memory required for data: 2894069840
+I1002 12:50:23.307690 32741 layer_factory.hpp:77] Creating layer relu4_3
+I1002 12:50:23.307708 32741 net.cpp:100] Creating Layer relu4_3
+I1002 12:50:23.307718 32741 net.cpp:434] relu4_3 <- conv4_3
+I1002 12:50:23.307734 32741 net.cpp:395] relu4_3 -> conv4_3 (in-place)
+I1002 12:50:23.307751 32741 net.cpp:150] Setting up relu4_3
+I1002 12:50:23.307760 32741 net.cpp:157] Top shape: 20 512 32 32 (10485760)
+I1002 12:50:23.307766 32741 net.cpp:165] Memory required for data: 2936012880
+I1002 12:50:23.307773 32741 layer_factory.hpp:77] Creating layer pool4
+I1002 12:50:23.307786 32741 net.cpp:100] Creating Layer pool4
+I1002 12:50:23.307792 32741 net.cpp:434] pool4 <- conv4_3
+I1002 12:50:23.307803 32741 net.cpp:408] pool4 -> pool4
+I1002 12:50:23.307848 32741 net.cpp:150] Setting up pool4
+I1002 12:50:23.307859 32741 net.cpp:157] Top shape: 20 512 16 16 (2621440)
+I1002 12:50:23.307867 32741 net.cpp:165] Memory required for data: 2946498640
+I1002 12:50:23.307873 32741 layer_factory.hpp:77] Creating layer conv5_1
+I1002 12:50:23.307893 32741 net.cpp:100] Creating Layer conv5_1
+I1002 12:50:23.307901 32741 net.cpp:434] conv5_1 <- pool4
+I1002 12:50:23.307912 32741 net.cpp:408] conv5_1 -> conv5_1
+I1002 12:50:23.341961 32741 net.cpp:150] Setting up conv5_1
+I1002 12:50:23.341995 32741 net.cpp:157] Top shape: 20 512 16 16 (2621440)
+I1002 12:50:23.342002 32741 net.cpp:165] Memory required for data: 2956984400
+I1002 12:50:23.342020 32741 layer_factory.hpp:77] Creating layer relu5_1
+I1002 12:50:23.342038 32741 net.cpp:100] Creating Layer relu5_1
+I1002 12:50:23.342048 32741 net.cpp:434] relu5_1 <- conv5_1
+I1002 12:50:23.342064 32741 net.cpp:395] relu5_1 -> conv5_1 (in-place)
+I1002 12:50:23.342082 32741 net.cpp:150] Setting up relu5_1
+I1002 12:50:23.342090 32741 net.cpp:157] Top shape: 20 512 16 16 (2621440)
+I1002 12:50:23.342097 32741 net.cpp:165] Memory required for data: 2967470160
+I1002 12:50:23.342109 32741 layer_factory.hpp:77] Creating layer conv5_2
+I1002 12:50:23.342128 32741 net.cpp:100] Creating Layer conv5_2
+I1002 12:50:23.342134 32741 net.cpp:434] conv5_2 <- conv5_1
+I1002 12:50:23.342146 32741 net.cpp:408] conv5_2 -> conv5_2
+I1002 12:50:23.375908 32741 net.cpp:150] Setting up conv5_2
+I1002 12:50:23.375949 32741 net.cpp:157] Top shape: 20 512 16 16 (2621440)
+I1002 12:50:23.375957 32741 net.cpp:165] Memory required for data: 2977955920
+I1002 12:50:23.375975 32741 layer_factory.hpp:77] Creating layer relu5_2
+I1002 12:50:23.376001 32741 net.cpp:100] Creating Layer relu5_2
+I1002 12:50:23.376013 32741 net.cpp:434] relu5_2 <- conv5_2
+I1002 12:50:23.376029 32741 net.cpp:395] relu5_2 -> conv5_2 (in-place)
+I1002 12:50:23.376046 32741 net.cpp:150] Setting up relu5_2
+I1002 12:50:23.376055 32741 net.cpp:157] Top shape: 20 512 16 16 (2621440)
+I1002 12:50:23.376063 32741 net.cpp:165] Memory required for data: 2988441680
+I1002 12:50:23.376070 32741 layer_factory.hpp:77] Creating layer conv5_3
+I1002 12:50:23.376088 32741 net.cpp:100] Creating Layer conv5_3
+I1002 12:50:23.376096 32741 net.cpp:434] conv5_3 <- conv5_2
+I1002 12:50:23.376107 32741 net.cpp:408] conv5_3 -> conv5_3
+I1002 12:50:23.407594 32741 net.cpp:150] Setting up conv5_3
+I1002 12:50:23.407637 32741 net.cpp:157] Top shape: 20 512 16 16 (2621440)
+I1002 12:50:23.407644 32741 net.cpp:165] Memory required for data: 2998927440
+I1002 12:50:23.407662 32741 layer_factory.hpp:77] Creating layer relu5_3
+I1002 12:50:23.407680 32741 net.cpp:100] Creating Layer relu5_3
+I1002 12:50:23.407690 32741 net.cpp:434] relu5_3 <- conv5_3
+I1002 12:50:23.407704 32741 net.cpp:395] relu5_3 -> conv5_3 (in-place)
+I1002 12:50:23.407723 32741 net.cpp:150] Setting up relu5_3
+I1002 12:50:23.407732 32741 net.cpp:157] Top shape: 20 512 16 16 (2621440)
+I1002 12:50:23.407739 32741 net.cpp:165] Memory required for data: 3009413200
+I1002 12:50:23.407757 32741 layer_factory.hpp:77] Creating layer pool5
+I1002 12:50:23.407771 32741 net.cpp:100] Creating Layer pool5
+I1002 12:50:23.407778 32741 net.cpp:434] pool5 <- conv5_3
+I1002 12:50:23.407789 32741 net.cpp:408] pool5 -> pool5
+I1002 12:50:23.407832 32741 net.cpp:150] Setting up pool5
+I1002 12:50:23.407845 32741 net.cpp:157] Top shape: 20 512 8 8 (655360)
+I1002 12:50:23.407850 32741 net.cpp:165] Memory required for data: 3012034640
+I1002 12:50:23.407858 32741 layer_factory.hpp:77] Creating layer fc6
+I1002 12:50:23.407886 32741 net.cpp:100] Creating Layer fc6
+I1002 12:50:23.407893 32741 net.cpp:434] fc6 <- pool5
+I1002 12:50:23.407904 32741 net.cpp:408] fc6 -> fc6
+I1002 12:50:23.995924 32741 net.cpp:150] Setting up fc6
+I1002 12:50:23.995964 32741 net.cpp:157] Top shape: 20 5 (100)
+I1002 12:50:23.995971 32741 net.cpp:165] Memory required for data: 3012035040
+I1002 12:50:23.995991 32741 layer_factory.hpp:77] Creating layer fc6_fc6_0_split
+I1002 12:50:23.996008 32741 net.cpp:100] Creating Layer fc6_fc6_0_split
+I1002 12:50:23.996019 32741 net.cpp:434] fc6_fc6_0_split <- fc6
+I1002 12:50:23.996035 32741 net.cpp:408] fc6_fc6_0_split -> fc6_fc6_0_split_0
+I1002 12:50:23.996054 32741 net.cpp:408] fc6_fc6_0_split -> fc6_fc6_0_split_1
+I1002 12:50:23.996101 32741 net.cpp:150] Setting up fc6_fc6_0_split
+I1002 12:50:23.996114 32741 net.cpp:157] Top shape: 20 5 (100)
+I1002 12:50:23.996121 32741 net.cpp:157] Top shape: 20 5 (100)
+I1002 12:50:23.996129 32741 net.cpp:165] Memory required for data: 3012035840
+I1002 12:50:23.996135 32741 layer_factory.hpp:77] Creating layer acc
+I1002 12:50:23.996151 32741 net.cpp:100] Creating Layer acc
+I1002 12:50:23.996162 32741 net.cpp:434] acc <- fc6_fc6_0_split_0
+I1002 12:50:23.996171 32741 net.cpp:434] acc <- label
+I1002 12:50:23.996182 32741 net.cpp:408] acc -> acc
+I1002 12:50:23.996202 32741 net.cpp:150] Setting up acc
+I1002 12:50:23.996212 32741 net.cpp:157] Top shape: (1)
+I1002 12:50:23.996217 32741 net.cpp:165] Memory required for data: 3012035844
+I1002 12:50:23.996223 32741 layer_factory.hpp:77] Creating layer sofmax
+I1002 12:50:23.996243 32741 net.cpp:100] Creating Layer sofmax
+I1002 12:50:23.996249 32741 net.cpp:434] sofmax <- fc6_fc6_0_split_1
+I1002 12:50:23.996259 32741 net.cpp:408] sofmax -> softmax
+I1002 12:50:23.996322 32741 net.cpp:150] Setting up sofmax
+I1002 12:50:23.996335 32741 net.cpp:157] Top shape: 20 5 (100)
+I1002 12:50:23.996340 32741 net.cpp:165] Memory required for data: 3012036244
+I1002 12:50:23.996371 32741 net.cpp:228] sofmax does not need backward computation.
+I1002 12:50:23.996377 32741 net.cpp:228] acc does not need backward computation.
+I1002 12:50:23.996387 32741 net.cpp:228] fc6_fc6_0_split does not need backward computation.
+I1002 12:50:23.996393 32741 net.cpp:228] fc6 does not need backward computation.
+I1002 12:50:23.996400 32741 net.cpp:228] pool5 does not need backward computation.
+I1002 12:50:23.996409 32741 net.cpp:228] relu5_3 does not need backward computation.
+I1002 12:50:23.996417 32741 net.cpp:228] conv5_3 does not need backward computation.
+I1002 12:50:23.996424 32741 net.cpp:228] relu5_2 does not need backward computation.
+I1002 12:50:23.996431 32741 net.cpp:228] conv5_2 does not need backward computation.
+I1002 12:50:23.996439 32741 net.cpp:228] relu5_1 does not need backward computation.
+I1002 12:50:23.996445 32741 net.cpp:228] conv5_1 does not need backward computation.
+I1002 12:50:23.996453 32741 net.cpp:228] pool4 does not need backward computation.
+I1002 12:50:23.996461 32741 net.cpp:228] relu4_3 does not need backward computation.
+I1002 12:50:23.996469 32741 net.cpp:228] conv4_3 does not need backward computation.
+I1002 12:50:23.996476 32741 net.cpp:228] relu4_2 does not need backward computation.
+I1002 12:50:23.996482 32741 net.cpp:228] conv4_2 does not need backward computation.
+I1002 12:50:23.996489 32741 net.cpp:228] relu4_1 does not need backward computation.
+I1002 12:50:23.996495 32741 net.cpp:228] conv4_1 does not need backward computation.
+I1002 12:50:23.996501 32741 net.cpp:228] pool3 does not need backward computation.
+I1002 12:50:23.996508 32741 net.cpp:228] relu3_3 does not need backward computation.
+I1002 12:50:23.996515 32741 net.cpp:228] conv3_3 does not need backward computation.
+I1002 12:50:23.996523 32741 net.cpp:228] relu3_2 does not need backward computation.
+I1002 12:50:23.996531 32741 net.cpp:228] conv3_2 does not need backward computation.
+I1002 12:50:23.996539 32741 net.cpp:228] relu3_1 does not need backward computation.
+I1002 12:50:23.996547 32741 net.cpp:228] conv3_1 does not need backward computation.
+I1002 12:50:23.996554 32741 net.cpp:228] pool2 does not need backward computation.
+I1002 12:50:23.996562 32741 net.cpp:228] relu2_2 does not need backward computation.
+I1002 12:50:23.996569 32741 net.cpp:228] conv2_2 does not need backward computation.
+I1002 12:50:23.996577 32741 net.cpp:228] relu2_1 does not need backward computation.
+I1002 12:50:23.996583 32741 net.cpp:228] conv2_1 does not need backward computation.
+I1002 12:50:23.996590 32741 net.cpp:228] pool1 does not need backward computation.
+I1002 12:50:23.996598 32741 net.cpp:228] relu1_2 does not need backward computation.
+I1002 12:50:23.996606 32741 net.cpp:228] conv1_2 does not need backward computation.
+I1002 12:50:23.996613 32741 net.cpp:228] relu1_1 does not need backward computation.
+I1002 12:50:23.996620 32741 net.cpp:228] conv1_1 does not need backward computation.
+I1002 12:50:23.996628 32741 net.cpp:228] data does not need backward computation.
+I1002 12:50:23.996635 32741 net.cpp:270] This network produces output acc
+I1002 12:50:23.996641 32741 net.cpp:270] This network produces output softmax
+I1002 12:50:23.996676 32741 net.cpp:283] Network initialization done.
+I1002 12:50:23.996815 32741 solver.cpp:60] Solver scaffolding done.
+I1002 12:50:23.997627 32741 caffe.cpp:251] Starting Optimization
+I1002 12:50:23.997638 32741 solver.cpp:279] Solving VGG16b
+I1002 12:50:23.997644 32741 solver.cpp:280] Learning Rate Policy: inv
+I1002 12:50:30.386996 32741 solver.cpp:228] Iteration 0, loss = 0
+I1002 12:50:30.387110 32741 solver.cpp:244]     Train net output #0: acc = 0.05
+I1002 12:50:30.387221 32741 solver.cpp:244]     Train net output #1: softmax = 5.03778e-09
+I1002 12:50:30.387235 32741 solver.cpp:244]     Train net output #2: softmax = 5.41225e-05
+I1002 12:50:30.387244 32741 solver.cpp:244]     Train net output #3: softmax = 0.999707
+I1002 12:50:30.387255 32741 solver.cpp:244]     Train net output #4: softmax = 0.0002388
+I1002 12:50:30.387266 32741 solver.cpp:244]     Train net output #5: softmax = 1.33009e-09
+I1002 12:50:30.387310 32741 solver.cpp:244]     Train net output #6: softmax = 3.1664e-23
+I1002 12:50:30.387322 32741 solver.cpp:244]     Train net output #7: softmax = 3.37794e-38
+I1002 12:50:30.387334 32741 solver.cpp:244]     Train net output #8: softmax = 1
+I1002 12:50:30.387346 32741 solver.cpp:244]     Train net output #9: softmax = 9.36901e-08
+I1002 12:50:30.387356 32741 solver.cpp:244]     Train net output #10: softmax = 4.45445e-08
+I1002 12:50:30.387367 32741 solver.cpp:244]     Train net output #11: softmax = 5.19945e-30
+I1002 12:50:30.387378 32741 solver.cpp:244]     Train net output #12: softmax = 8.68805e-44
+I1002 12:50:30.387390 32741 solver.cpp:244]     Train net output #13: softmax = 8.93319e-37
+I1002 12:50:30.387401 32741 solver.cpp:244]     Train net output #14: softmax = 1
+I1002 12:50:30.387411 32741 solver.cpp:244]     Train net output #15: softmax = 1.22958e-29
+I1002 12:50:30.387423 32741 solver.cpp:244]     Train net output #16: softmax = 1.1318e-16
+I1002 12:50:30.387432 32741 solver.cpp:244]     Train net output #17: softmax = 4.71931e-27
+I1002 12:50:30.387444 32741 solver.cpp:244]     Train net output #18: softmax = 1
+I1002 12:50:30.387454 32741 solver.cpp:244]     Train net output #19: softmax = 9.43126e-11
+I1002 12:50:30.387462 32741 solver.cpp:244]     Train net output #20: softmax = 3.42656e-07
+I1002 12:50:30.387471 32741 solver.cpp:244]     Train net output #21: softmax = 0
+I1002 12:50:30.387480 32741 solver.cpp:244]     Train net output #22: softmax = 0
+I1002 12:50:30.387490 32741 solver.cpp:244]     Train net output #23: softmax = 1.18463e-23
+I1002 12:50:30.387501 32741 solver.cpp:244]     Train net output #24: softmax = 6.06778e-23
+I1002 12:50:30.387511 32741 solver.cpp:244]     Train net output #25: softmax = 1
+I1002 12:50:30.387521 32741 solver.cpp:244]     Train net output #26: softmax = 8.93977e-09
+I1002 12:50:30.387532 32741 solver.cpp:244]     Train net output #27: softmax = 1.88544e-16
+I1002 12:50:30.387543 32741 solver.cpp:244]     Train net output #28: softmax = 0.00147014
+I1002 12:50:30.387554 32741 solver.cpp:244]     Train net output #29: softmax = 0.99853
+I1002 12:50:30.387564 32741 solver.cpp:244]     Train net output #30: softmax = 4.28873e-08
+I1002 12:50:30.387573 32741 solver.cpp:244]     Train net output #31: softmax = 1.00741e-22
+I1002 12:50:30.387584 32741 solver.cpp:244]     Train net output #32: softmax = 7.85162e-05
+I1002 12:50:30.387594 32741 solver.cpp:244]     Train net output #33: softmax = 0.998729
+I1002 12:50:30.387604 32741 solver.cpp:244]     Train net output #34: softmax = 5.3187e-16
+I1002 12:50:30.387615 32741 solver.cpp:244]     Train net output #35: softmax = 0.00119258
+I1002 12:50:30.387625 32741 solver.cpp:244]     Train net output #36: softmax = 9.27248e-07
+I1002 12:50:30.387635 32741 solver.cpp:244]     Train net output #37: softmax = 0.000962268
+I1002 12:50:30.387646 32741 solver.cpp:244]     Train net output #38: softmax = 1.93961e-07
+I1002 12:50:30.387657 32741 solver.cpp:244]     Train net output #39: softmax = 0.999037
+I1002 12:50:30.387668 32741 solver.cpp:244]     Train net output #40: softmax = 2.7354e-08
+I1002 12:50:30.387679 32741 solver.cpp:244]     Train net output #41: softmax = 0.98787
+I1002 12:50:30.387689 32741 solver.cpp:244]     Train net output #42: softmax = 0.000377124
+I1002 12:50:30.387699 32741 solver.cpp:244]     Train net output #43: softmax = 0.00677627
+I1002 12:50:30.387711 32741 solver.cpp:244]     Train net output #44: softmax = 0.00497717
+I1002 12:50:30.387720 32741 solver.cpp:244]     Train net output #45: softmax = 6.07749e-19
+I1002 12:50:30.387732 32741 solver.cpp:244]     Train net output #46: softmax = 4.17424e-39
+I1002 12:50:30.387742 32741 solver.cpp:244]     Train net output #47: softmax = 1.40209e-37
+I1002 12:50:30.387753 32741 solver.cpp:244]     Train net output #48: softmax = 1
+I1002 12:50:30.387763 32741 solver.cpp:244]     Train net output #49: softmax = 3.09594e-09
+I1002 12:50:30.387773 32741 solver.cpp:244]     Train net output #50: softmax = 0
+I1002 12:50:30.387792 32741 solver.cpp:244]     Train net output #51: softmax = 2.27571e-22
+I1002 12:50:30.387804 32741 solver.cpp:244]     Train net output #52: softmax = 3.73287e-19
+I1002 12:50:30.387814 32741 solver.cpp:244]     Train net output #53: softmax = 1
+I1002 12:50:30.387825 32741 solver.cpp:244]     Train net output #54: softmax = 1.32592e-22
+I1002 12:50:30.387835 32741 solver.cpp:244]     Train net output #55: softmax = 5.29122e-11
+I1002 12:50:30.387845 32741 solver.cpp:244]     Train net output #56: softmax = 5.00193e-07
+I1002 12:50:30.387856 32741 solver.cpp:244]     Train net output #57: softmax = 0.000484986
+I1002 12:50:30.387866 32741 solver.cpp:244]     Train net output #58: softmax = 9.65398e-05
+I1002 12:50:30.387877 32741 solver.cpp:244]     Train net output #59: softmax = 0.110616
+I1002 12:50:30.387888 32741 solver.cpp:244]     Train net output #60: softmax = 0.888802
+I1002 12:50:30.387899 32741 solver.cpp:244]     Train net output #61: softmax = 3.6837e-09
+I1002 12:50:30.387908 32741 solver.cpp:244]     Train net output #62: softmax = 2.9876e-20
+I1002 12:50:30.387917 32741 solver.cpp:244]     Train net output #63: softmax = 1.004e-05
+I1002 12:50:30.387924 32741 solver.cpp:244]     Train net output #64: softmax = 0.99999
+I1002 12:50:30.387929 32741 solver.cpp:244]     Train net output #65: softmax = 5.0287e-07
+I1002 12:50:30.387933 32741 solver.cpp:244]     Train net output #66: softmax = 8.82595e-18
+I1002 12:50:30.387938 32741 solver.cpp:244]     Train net output #67: softmax = 4.04428e-11
+I1002 12:50:30.387943 32741 solver.cpp:244]     Train net output #68: softmax = 0.00930888
+I1002 12:50:30.387948 32741 solver.cpp:244]     Train net output #69: softmax = 0.990691
+I1002 12:50:30.387951 32741 solver.cpp:244]     Train net output #70: softmax = 7.2651e-08
+I1002 12:50:30.387955 32741 solver.cpp:244]     Train net output #71: softmax = 1.47362e-07
+I1002 12:50:30.387960 32741 solver.cpp:244]     Train net output #72: softmax = 3.10095e-20
+I1002 12:50:30.387964 32741 solver.cpp:244]     Train net output #73: softmax = 3.33182e-07
+I1002 12:50:30.387969 32741 solver.cpp:244]     Train net output #74: softmax = 1
+I1002 12:50:30.387974 32741 solver.cpp:244]     Train net output #75: softmax = 6.02905e-19
+I1002 12:50:30.387979 32741 solver.cpp:244]     Train net output #76: softmax = 1.9258e-16
+I1002 12:50:30.387982 32741 solver.cpp:244]     Train net output #77: softmax = 5.32983e-05
+I1002 12:50:30.387986 32741 solver.cpp:244]     Train net output #78: softmax = 0.999946
+I1002 12:50:30.387991 32741 solver.cpp:244]     Train net output #79: softmax = 5.39092e-07
+I1002 12:50:30.387995 32741 solver.cpp:244]     Train net output #80: softmax = 1.29011e-07
+I1002 12:50:30.388000 32741 solver.cpp:244]     Train net output #81: softmax = 0.00282691
+I1002 12:50:30.388005 32741 solver.cpp:244]     Train net output #82: softmax = 0.000194096
+I1002 12:50:30.388008 32741 solver.cpp:244]     Train net output #83: softmax = 0.995428
+I1002 12:50:30.388013 32741 solver.cpp:244]     Train net output #84: softmax = 0.0015421
+I1002 12:50:30.388017 32741 solver.cpp:244]     Train net output #85: softmax = 8.8391e-06
+I1002 12:50:30.388022 32741 solver.cpp:244]     Train net output #86: softmax = 0.0149735
+I1002 12:50:30.388026 32741 solver.cpp:244]     Train net output #87: softmax = 9.54632e-26
+I1002 12:50:30.388031 32741 solver.cpp:244]     Train net output #88: softmax = 6.60246e-11
+I1002 12:50:30.388036 32741 solver.cpp:244]     Train net output #89: softmax = 0.985027
+I1002 12:50:30.388039 32741 solver.cpp:244]     Train net output #90: softmax = 5.43151e-18
+I1002 12:50:30.388044 32741 solver.cpp:244]     Train net output #91: softmax = 2.40935e-11
+I1002 12:50:30.388048 32741 solver.cpp:244]     Train net output #92: softmax = 7.0053e-36
+I1002 12:50:30.388053 32741 solver.cpp:244]     Train net output #93: softmax = 1
+I1002 12:50:30.388057 32741 solver.cpp:244]     Train net output #94: softmax = 4.62099e-30
+I1002 12:50:30.388062 32741 solver.cpp:244]     Train net output #95: softmax = 9.12621e-16
+I1002 12:50:30.388067 32741 solver.cpp:244]     Train net output #96: softmax = 0
+I1002 12:50:30.388080 32741 solver.cpp:244]     Train net output #97: softmax = 0
+I1002 12:50:30.388085 32741 solver.cpp:244]     Train net output #98: softmax = 1
+I1002 12:50:30.388089 32741 solver.cpp:244]     Train net output #99: softmax = 2.59174e-27
+I1002 12:50:30.388094 32741 solver.cpp:244]     Train net output #100: softmax = 0
+I1002 12:50:30.388144 32741 sgd_solver.cpp:106] Iteration 0, lr = 0.0003
+I1002 12:50:36.796288 32741 solver.cpp:228] Iteration 1, loss = 0
+I1002 12:50:36.796329 32741 solver.cpp:244]     Train net output #0: acc = 0.25
+I1002 12:50:36.796358 32741 solver.cpp:244]     Train net output #1: softmax = 9.93538e-34
+I1002 12:50:36.796373 32741 solver.cpp:244]     Train net output #2: softmax = 9.66896e-44
+I1002 12:50:36.796386 32741 solver.cpp:244]     Train net output #3: softmax = 5.03388e-23
+I1002 12:50:36.796396 32741 solver.cpp:244]     Train net output #4: softmax = 1
+I1002 12:50:36.796407 32741 solver.cpp:244]     Train net output #5: softmax = 4.21421e-28
+I1002 12:50:36.796418 32741 solver.cpp:244]     Train net output #6: softmax = 0.987177
+I1002 12:50:36.796428 32741 solver.cpp:244]     Train net output #7: softmax = 7.81614e-07
+I1002 12:50:36.796440 32741 solver.cpp:244]     Train net output #8: softmax = 0.0125437
+I1002 12:50:36.796449 32741 solver.cpp:244]     Train net output #9: softmax = 9.76029e-09
+I1002 12:50:36.796458 32741 solver.cpp:244]     Train net output #10: softmax = 0.00027883
+I1002 12:50:36.796468 32741 solver.cpp:244]     Train net output #11: softmax = 0.363464
+I1002 12:50:36.796476 32741 solver.cpp:244]     Train net output #12: softmax = 0.393567
+I1002 12:50:36.796488 32741 solver.cpp:244]     Train net output #13: softmax = 0.1647
+I1002 12:50:36.796497 32741 solver.cpp:244]     Train net output #14: softmax = 0.0774895
+I1002 12:50:36.796509 32741 solver.cpp:244]     Train net output #15: softmax = 0.00077955
+I1002 12:50:36.796519 32741 solver.cpp:244]     Train net output #16: softmax = 7.05585e-14
+I1002 12:50:36.796530 32741 solver.cpp:244]     Train net output #17: softmax = 6.53533e-17
+I1002 12:50:36.796540 32741 solver.cpp:244]     Train net output #18: softmax = 0.0169919
+I1002 12:50:36.796551 32741 solver.cpp:244]     Train net output #19: softmax = 0.767423
+I1002 12:50:36.796561 32741 solver.cpp:244]     Train net output #20: softmax = 0.215586
+I1002 12:50:36.796572 32741 solver.cpp:244]     Train net output #21: softmax = 4.40461e-05
+I1002 12:50:36.796583 32741 solver.cpp:244]     Train net output #22: softmax = 8.43642e-07
+I1002 12:50:36.796593 32741 solver.cpp:244]     Train net output #23: softmax = 0.00142936
+I1002 12:50:36.796604 32741 solver.cpp:244]     Train net output #24: softmax = 0.998217
+I1002 12:50:36.796614 32741 solver.cpp:244]     Train net output #25: softmax = 0.000308389
+I1002 12:50:36.796624 32741 solver.cpp:244]     Train net output #26: softmax = 1.0882e-05
+I1002 12:50:36.796634 32741 solver.cpp:244]     Train net output #27: softmax = 2.74055e-07
+I1002 12:50:36.796644 32741 solver.cpp:244]     Train net output #28: softmax = 2.13388e-12
+I1002 12:50:36.796655 32741 solver.cpp:244]     Train net output #29: softmax = 0.999989
+I1002 12:50:36.796664 32741 solver.cpp:244]     Train net output #30: softmax = 2.01204e-28
+I1002 12:50:36.796675 32741 solver.cpp:244]     Train net output #31: softmax = 0.999773
+I1002 12:50:36.796685 32741 solver.cpp:244]     Train net output #32: softmax = 7.20467e-17
+I1002 12:50:36.796696 32741 solver.cpp:244]     Train net output #33: softmax = 3.80573e-06
+I1002 12:50:36.796707 32741 solver.cpp:244]     Train net output #34: softmax = 0.000222884
+I1002 12:50:36.796717 32741 solver.cpp:244]     Train net output #35: softmax = 2.50592e-13
+I1002 12:50:36.796728 32741 solver.cpp:244]     Train net output #36: softmax = 1.53431e-19
+I1002 12:50:36.796738 32741 solver.cpp:244]     Train net output #37: softmax = 4.60259e-13
+I1002 12:50:36.796749 32741 solver.cpp:244]     Train net output #38: softmax = 3.55783e-07
+I1002 12:50:36.796759 32741 solver.cpp:244]     Train net output #39: softmax = 1
+I1002 12:50:36.796788 32741 solver.cpp:244]     Train net output #40: softmax = 2.27586e-28
+I1002 12:50:36.796800 32741 solver.cpp:244]     Train net output #41: softmax = 6.55043e-26
+I1002 12:50:36.796811 32741 solver.cpp:244]     Train net output #42: softmax = 1
+I1002 12:50:36.796823 32741 solver.cpp:244]     Train net output #43: softmax = 3.95407e-15
+I1002 12:50:36.796833 32741 solver.cpp:244]     Train net output #44: softmax = 3.99839e-11
+I1002 12:50:36.796844 32741 solver.cpp:244]     Train net output #45: softmax = 3.30631e-35
+I1002 12:50:36.796854 32741 solver.cpp:244]     Train net output #46: softmax = 0.00040963
+I1002 12:50:36.796864 32741 solver.cpp:244]     Train net output #47: softmax = 0.000342268
+I1002 12:50:36.796875 32741 solver.cpp:244]     Train net output #48: softmax = 0.892463
+I1002 12:50:36.796886 32741 solver.cpp:244]     Train net output #49: softmax = 0.106288
+I1002 12:50:36.796896 32741 solver.cpp:244]     Train net output #50: softmax = 0.000496979
+I1002 12:50:36.796906 32741 solver.cpp:244]     Train net output #51: softmax = 3.51175e-05
+I1002 12:50:36.796916 32741 solver.cpp:244]     Train net output #52: softmax = 0.0136513
+I1002 12:50:36.796926 32741 solver.cpp:244]     Train net output #53: softmax = 0.986313
+I1002 12:50:36.796934 32741 solver.cpp:244]     Train net output #54: softmax = 3.98768e-15
+I1002 12:50:36.796947 32741 solver.cpp:244]     Train net output #55: softmax = 1.2013e-07
+I1002 12:50:36.796957 32741 solver.cpp:244]     Train net output #56: softmax = 4.52556e-08
+I1002 12:50:36.796980 32741 solver.cpp:244]     Train net output #57: softmax = 4.22972e-10
+I1002 12:50:36.796991 32741 solver.cpp:244]     Train net output #58: softmax = 0.999945
+I1002 12:50:36.797000 32741 solver.cpp:244]     Train net output #59: softmax = 5.45868e-05
+I1002 12:50:36.797010 32741 solver.cpp:244]     Train net output #60: softmax = 1.46154e-07
+I1002 12:50:36.797021 32741 solver.cpp:244]     Train net output #61: softmax = 0.000242356
+I1002 12:50:36.797031 32741 solver.cpp:244]     Train net output #62: softmax = 0.00553541
+I1002 12:50:36.797042 32741 solver.cpp:244]     Train net output #63: softmax = 0.984051
+I1002 12:50:36.797053 32741 solver.cpp:244]     Train net output #64: softmax = 0.0028615
+I1002 12:50:36.797065 32741 solver.cpp:244]     Train net output #65: softmax = 0.00730995
+I1002 12:50:36.797075 32741 solver.cpp:244]     Train net output #66: softmax = 1
+I1002 12:50:36.797085 32741 solver.cpp:244]     Train net output #67: softmax = 1.01848e-20
+I1002 12:50:36.797096 32741 solver.cpp:244]     Train net output #68: softmax = 4.84859e-07
+I1002 12:50:36.797106 32741 solver.cpp:244]     Train net output #69: softmax = 1.40254e-20
+I1002 12:50:36.797116 32741 solver.cpp:244]     Train net output #70: softmax = 8.21419e-25
+I1002 12:50:36.797127 32741 solver.cpp:244]     Train net output #71: softmax = 2.77043e-12
+I1002 12:50:36.797137 32741 solver.cpp:244]     Train net output #72: softmax = 3.22197e-14
+I1002 12:50:36.797147 32741 solver.cpp:244]     Train net output #73: softmax = 0.999999
+I1002 12:50:36.797163 32741 solver.cpp:244]     Train net output #74: softmax = 1.35839e-06
+I1002 12:50:36.797173 32741 solver.cpp:244]     Train net output #75: softmax = 3.99306e-10
+I1002 12:50:36.797184 32741 solver.cpp:244]     Train net output #76: softmax = 0.251985
+I1002 12:50:36.797194 32741 solver.cpp:244]     Train net output #77: softmax = 0.34749
+I1002 12:50:36.797204 32741 solver.cpp:244]     Train net output #78: softmax = 0.241429
+I1002 12:50:36.797214 32741 solver.cpp:244]     Train net output #79: softmax = 0.158356
+I1002 12:50:36.797224 32741 solver.cpp:244]     Train net output #80: softmax = 0.000740558
+I1002 12:50:36.797235 32741 solver.cpp:244]     Train net output #81: softmax = 1.0938e-13
+I1002 12:50:36.797245 32741 solver.cpp:244]     Train net output #82: softmax = 4.26505e-13
+I1002 12:50:36.797255 32741 solver.cpp:244]     Train net output #83: softmax = 0.266172
+I1002 12:50:36.797266 32741 solver.cpp:244]     Train net output #84: softmax = 1.57884e-08
+I1002 12:50:36.797286 32741 solver.cpp:244]     Train net output #85: softmax = 0.733828
+I1002 12:50:36.797297 32741 solver.cpp:244]     Train net output #86: softmax = 0.000239621
+I1002 12:50:36.797308 32741 solver.cpp:244]     Train net output #87: softmax = 0.475617
+I1002 12:50:36.797318 32741 solver.cpp:244]     Train net output #88: softmax = 0.515599
+I1002 12:50:36.797329 32741 solver.cpp:244]     Train net output #89: softmax = 0.00854385
+I1002 12:50:36.797339 32741 solver.cpp:244]     Train net output #90: softmax = 2.41838e-09
+I1002 12:50:36.797350 32741 solver.cpp:244]     Train net output #91: softmax = 0.993375
+I1002 12:50:36.797360 32741 solver.cpp:244]     Train net output #92: softmax = 9.15826e-20
+I1002 12:50:36.797371 32741 solver.cpp:244]     Train net output #93: softmax = 2.75543e-08
+I1002 12:50:36.797381 32741 solver.cpp:244]     Train net output #94: softmax = 0.0066247
+I1002 12:50:36.797391 32741 solver.cpp:244]     Train net output #95: softmax = 2.07551e-30
+I1002 12:50:36.797404 32741 solver.cpp:244]     Train net output #96: softmax = 0.328615
+I1002 12:50:36.797413 32741 solver.cpp:244]     Train net output #97: softmax = 0.49266
+I1002 12:50:36.797423 32741 solver.cpp:244]     Train net output #98: softmax = 0.0328447
+I1002 12:50:36.797433 32741 solver.cpp:244]     Train net output #99: softmax = 0.145793
+I1002 12:50:36.797442 32741 solver.cpp:244]     Train net output #100: softmax = 8.72651e-05
+I1002 12:50:36.797463 32741 sgd_solver.cpp:106] Iteration 1, lr = 0.000299998
+I1002 12:50:41.365247 32741 heproot.cpp:20] Queuing data... (1 sec.)
+I1002 12:50:43.968904 32741 solver.cpp:228] Iteration 2, loss = 0
+I1002 12:50:43.968945 32741 solver.cpp:244]     Train net output #0: acc = 0
+I1002 12:50:43.968976 32741 solver.cpp:244]     Train net output #1: softmax = 0.113865
+I1002 12:50:43.968988 32741 solver.cpp:244]     Train net output #2: softmax = 5.34998e-11
+I1002 12:50:43.969000 32741 solver.cpp:244]     Train net output #3: softmax = 0.885998
+I1002 12:50:43.969012 32741 solver.cpp:244]     Train net output #4: softmax = 0.000137645
+I1002 12:50:43.969022 32741 solver.cpp:244]     Train net output #5: softmax = 6.9165e-15
+I1002 12:50:43.969033 32741 solver.cpp:244]     Train net output #6: softmax = 0.0240903
+I1002 12:50:43.969043 32741 solver.cpp:244]     Train net output #7: softmax = 0.161613
+I1002 12:50:43.969055 32741 solver.cpp:244]     Train net output #8: softmax = 0.707599
+I1002 12:50:43.969065 32741 solver.cpp:244]     Train net output #9: softmax = 0.052415
+I1002 12:50:43.969075 32741 solver.cpp:244]     Train net output #10: softmax = 0.0542837
+I1002 12:50:43.969086 32741 solver.cpp:244]     Train net output #11: softmax = 3.22868e-07
+I1002 12:50:43.969097 32741 solver.cpp:244]     Train net output #12: softmax = 0.00670899
+I1002 12:50:43.969108 32741 solver.cpp:244]     Train net output #13: softmax = 0.982163
+I1002 12:50:43.969118 32741 solver.cpp:244]     Train net output #14: softmax = 0.0105312
+I1002 12:50:43.969130 32741 solver.cpp:244]     Train net output #15: softmax = 0.000596877
+I1002 12:50:43.969139 32741 solver.cpp:244]     Train net output #16: softmax = 0.278459
+I1002 12:50:43.969151 32741 solver.cpp:244]     Train net output #17: softmax = 0.715107
+I1002 12:50:43.969164 32741 solver.cpp:244]     Train net output #18: softmax = 0.0020968
+I1002 12:50:43.969177 32741 solver.cpp:244]     Train net output #19: softmax = 0.00433707
+I1002 12:50:43.969187 32741 solver.cpp:244]     Train net output #20: softmax = 3.72489e-08
+I1002 12:50:43.969197 32741 solver.cpp:244]     Train net output #21: softmax = 0.0740009
+I1002 12:50:43.969208 32741 solver.cpp:244]     Train net output #22: softmax = 0.0473046
+I1002 12:50:43.969218 32741 solver.cpp:244]     Train net output #23: softmax = 0.200844
+I1002 12:50:43.969228 32741 solver.cpp:244]     Train net output #24: softmax = 0.662833
+I1002 12:50:43.969239 32741 solver.cpp:244]     Train net output #25: softmax = 0.0150177
+I1002 12:50:43.969250 32741 solver.cpp:244]     Train net output #26: softmax = 0.247902
+I1002 12:50:43.969285 32741 solver.cpp:244]     Train net output #27: softmax = 5.04461e-17
+I1002 12:50:43.969296 32741 solver.cpp:244]     Train net output #28: softmax = 0.323954
+I1002 12:50:43.969306 32741 solver.cpp:244]     Train net output #29: softmax = 0.428056
+I1002 12:50:43.969317 32741 solver.cpp:244]     Train net output #30: softmax = 8.81906e-05
+I1002 12:50:43.969327 32741 solver.cpp:244]     Train net output #31: softmax = 7.56085e-06
+I1002 12:50:43.969338 32741 solver.cpp:244]     Train net output #32: softmax = 2.34746e-06
+I1002 12:50:43.969348 32741 solver.cpp:244]     Train net output #33: softmax = 0.90826
+I1002 12:50:43.969358 32741 solver.cpp:244]     Train net output #34: softmax = 0.0904569
+I1002 12:50:43.969368 32741 solver.cpp:244]     Train net output #35: softmax = 0.00127338
+I1002 12:50:43.969379 32741 solver.cpp:244]     Train net output #36: softmax = 3.18481e-05
+I1002 12:50:43.969390 32741 solver.cpp:244]     Train net output #37: softmax = 6.04349e-05
+I1002 12:50:43.969400 32741 solver.cpp:244]     Train net output #38: softmax = 0.999099
+I1002 12:50:43.969411 32741 solver.cpp:244]     Train net output #39: softmax = 0.000655875
+I1002 12:50:43.969420 32741 solver.cpp:244]     Train net output #40: softmax = 0.00015242
+I1002 12:50:43.969430 32741 solver.cpp:244]     Train net output #41: softmax = 5.18913e-05
+I1002 12:50:43.969439 32741 solver.cpp:244]     Train net output #42: softmax = 2.13581e-05
+I1002 12:50:43.969447 32741 solver.cpp:244]     Train net output #43: softmax = 0.988749
+I1002 12:50:43.969457 32741 solver.cpp:244]     Train net output #44: softmax = 0.000843892
+I1002 12:50:43.969467 32741 solver.cpp:244]     Train net output #45: softmax = 0.0103342
+I1002 12:50:43.969478 32741 solver.cpp:244]     Train net output #46: softmax = 5.70576e-18
+I1002 12:50:43.969488 32741 solver.cpp:244]     Train net output #47: softmax = 0.00035357
+I1002 12:50:43.969499 32741 solver.cpp:244]     Train net output #48: softmax = 0.0661818
+I1002 12:50:43.969509 32741 solver.cpp:244]     Train net output #49: softmax = 0.933465
+I1002 12:50:43.969519 32741 solver.cpp:244]     Train net output #50: softmax = 1.59943e-13
+I1002 12:50:43.969530 32741 solver.cpp:244]     Train net output #51: softmax = 2.55114e-05
+I1002 12:50:43.969540 32741 solver.cpp:244]     Train net output #52: softmax = 1.14854e-06
+I1002 12:50:43.969550 32741 solver.cpp:244]     Train net output #53: softmax = 0.000305011
+I1002 12:50:43.969561 32741 solver.cpp:244]     Train net output #54: softmax = 0.999668
+I1002 12:50:43.969571 32741 solver.cpp:244]     Train net output #55: softmax = 7.08315e-14
+I1002 12:50:43.969581 32741 solver.cpp:244]     Train net output #56: softmax = 9.29696e-28
+I1002 12:50:43.969593 32741 solver.cpp:244]     Train net output #57: softmax = 0
+I1002 12:50:43.969602 32741 solver.cpp:244]     Train net output #58: softmax = 6.78813e-16
+I1002 12:50:43.969614 32741 solver.cpp:244]     Train net output #59: softmax = 1
+I1002 12:50:43.969624 32741 solver.cpp:244]     Train net output #60: softmax = 1.58552e-29
+I1002 12:50:43.969633 32741 solver.cpp:244]     Train net output #61: softmax = 0.000213862
+I1002 12:50:43.969641 32741 solver.cpp:244]     Train net output #62: softmax = 0.036965
+I1002 12:50:43.969646 32741 solver.cpp:244]     Train net output #63: softmax = 0.129139
+I1002 12:50:43.969650 32741 solver.cpp:244]     Train net output #64: softmax = 0.831769
+I1002 12:50:43.969655 32741 solver.cpp:244]     Train net output #65: softmax = 0.00191289
+I1002 12:50:43.969660 32741 solver.cpp:244]     Train net output #66: softmax = 0.999613
+I1002 12:50:43.969663 32741 solver.cpp:244]     Train net output #67: softmax = 7.76083e-15
+I1002 12:50:43.969668 32741 solver.cpp:244]     Train net output #68: softmax = 0.000387086
+I1002 12:50:43.969672 32741 solver.cpp:244]     Train net output #69: softmax = 4.65662e-12
+I1002 12:50:43.969676 32741 solver.cpp:244]     Train net output #70: softmax = 1.40693e-16
+I1002 12:50:43.969681 32741 solver.cpp:244]     Train net output #71: softmax = 0.00853491
+I1002 12:50:43.969686 32741 solver.cpp:244]     Train net output #72: softmax = 8.12932e-06
+I1002 12:50:43.969698 32741 solver.cpp:244]     Train net output #73: softmax = 0.00089812
+I1002 12:50:43.969704 32741 solver.cpp:244]     Train net output #74: softmax = 0.990252
+I1002 12:50:43.969708 32741 solver.cpp:244]     Train net output #75: softmax = 0.00030713
+I1002 12:50:43.969713 32741 solver.cpp:244]     Train net output #76: softmax = 0.0311933
+I1002 12:50:43.969717 32741 solver.cpp:244]     Train net output #77: softmax = 0.176751
+I1002 12:50:43.969722 32741 solver.cpp:244]     Train net output #78: softmax = 0.0513127
+I1002 12:50:43.969727 32741 solver.cpp:244]     Train net output #79: softmax = 0.735212
+I1002 12:50:43.969730 32741 solver.cpp:244]     Train net output #80: softmax = 0.00553143
+I1002 12:50:43.969734 32741 solver.cpp:244]     Train net output #81: softmax = 1.41537e-15
+I1002 12:50:43.969739 32741 solver.cpp:244]     Train net output #82: softmax = 8.81646e-22
+I1002 12:50:43.969743 32741 solver.cpp:244]     Train net output #83: softmax = 2.82196e-07
+I1002 12:50:43.969748 32741 solver.cpp:244]     Train net output #84: softmax = 1
+I1002 12:50:43.969753 32741 solver.cpp:244]     Train net output #85: softmax = 1.32355e-18
+I1002 12:50:43.969756 32741 solver.cpp:244]     Train net output #86: softmax = 1.11898e-08
+I1002 12:50:43.969761 32741 solver.cpp:244]     Train net output #87: softmax = 7.03976e-06
+I1002 12:50:43.969765 32741 solver.cpp:244]     Train net output #88: softmax = 0.999987
+I1002 12:50:43.969769 32741 solver.cpp:244]     Train net output #89: softmax = 6.01425e-06
+I1002 12:50:43.969774 32741 solver.cpp:244]     Train net output #90: softmax = 1.80378e-08
+I1002 12:50:43.969777 32741 solver.cpp:244]     Train net output #91: softmax = 0.425737
+I1002 12:50:43.969782 32741 solver.cpp:244]     Train net output #92: softmax = 0.572838
+I1002 12:50:43.969786 32741 solver.cpp:244]     Train net output #93: softmax = 1.24766e-06
+I1002 12:50:43.969790 32741 solver.cpp:244]     Train net output #94: softmax = 0.0014239
+I1002 12:50:43.969794 32741 solver.cpp:244]     Train net output #95: softmax = 9.03988e-19
+I1002 12:50:43.969799 32741 solver.cpp:244]     Train net output #96: softmax = 0.162177
+I1002 12:50:43.969804 32741 solver.cpp:244]     Train net output #97: softmax = 0.263037
+I1002 12:50:43.969807 32741 solver.cpp:244]     Train net output #98: softmax = 0.490221
+I1002 12:50:43.969811 32741 solver.cpp:244]     Train net output #99: softmax = 0.0635718
+I1002 12:50:43.969815 32741 solver.cpp:244]     Train net output #100: softmax = 0.0209931
+I1002 12:50:43.969825 32741 sgd_solver.cpp:106] Iteration 2, lr = 0.000299996
+I1002 12:50:51.009533 32741 solver.cpp:228] Iteration 3, loss = 0
+I1002 12:50:51.105314 32741 solver.cpp:244]     Train net output #0: acc = 0
+I1002 12:50:51.105401 32741 solver.cpp:244]     Train net output #1: softmax = 3.06842e-16
+I1002 12:50:51.105414 32741 solver.cpp:244]     Train net output #2: softmax = 6.36236e-11
+I1002 12:50:51.105424 32741 solver.cpp:244]     Train net output #3: softmax = 1
+I1002 12:50:51.105434 32741 solver.cpp:244]     Train net output #4: softmax = 1.3398e-16
+I1002 12:50:51.105444 32741 solver.cpp:244]     Train net output #5: softmax = 4.63831e-07
+I1002 12:50:51.105455 32741 solver.cpp:244]     Train net output #6: softmax = 2.40396e-21
+I1002 12:50:51.105465 32741 solver.cpp:244]     Train net output #7: softmax = 8.67404e-34
+I1002 12:50:51.105476 32741 solver.cpp:244]     Train net output #8: softmax = 0.00165665
+I1002 12:50:51.105487 32741 solver.cpp:244]     Train net output #9: softmax = 0.998343
+I1002 12:50:51.105499 32741 solver.cpp:244]     Train net output #10: softmax = 4.09915e-13
+I1002 12:50:51.105509 32741 solver.cpp:244]     Train net output #11: softmax = 0.0120428
+I1002 12:50:51.105520 32741 solver.cpp:244]     Train net output #12: softmax = 0.576994
+I1002 12:50:51.105531 32741 solver.cpp:244]     Train net output #13: softmax = 0.350275
+I1002 12:50:51.105541 32741 solver.cpp:244]     Train net output #14: softmax = 0.0601475
+I1002 12:50:51.105552 32741 solver.cpp:244]     Train net output #15: softmax = 0.000540757
+I1002 12:50:51.105563 32741 solver.cpp:244]     Train net output #16: softmax = 0.322823
+I1002 12:50:51.105573 32741 solver.cpp:244]     Train net output #17: softmax = 0.0456742
+I1002 12:50:51.105583 32741 solver.cpp:244]     Train net output #18: softmax = 0.385633
+I1002 12:50:51.105594 32741 solver.cpp:244]     Train net output #19: softmax = 0.166503
+I1002 12:50:51.105604 32741 solver.cpp:244]     Train net output #20: softmax = 0.0793668
+I1002 12:50:51.105614 32741 solver.cpp:244]     Train net output #21: softmax = 0.141738
+I1002 12:50:51.105624 32741 solver.cpp:244]     Train net output #22: softmax = 0.1523
+I1002 12:50:51.105635 32741 solver.cpp:244]     Train net output #23: softmax = 0.705908
+I1002 12:50:51.105645 32741 solver.cpp:244]     Train net output #24: softmax = 6.9022e-06
+I1002 12:50:51.105656 32741 solver.cpp:244]     Train net output #25: softmax = 4.70714e-05
+I1002 12:50:51.105667 32741 solver.cpp:244]     Train net output #26: softmax = 9.12951e-17
+I1002 12:50:51.105677 32741 solver.cpp:244]     Train net output #27: softmax = 6.10733e-15
+I1002 12:50:51.105689 32741 solver.cpp:244]     Train net output #28: softmax = 2.49334e-07
+I1002 12:50:51.105698 32741 solver.cpp:244]     Train net output #29: softmax = 1
+I1002 12:50:51.105707 32741 solver.cpp:244]     Train net output #30: softmax = 1.91016e-37
+I1002 12:50:51.105715 32741 solver.cpp:244]     Train net output #31: softmax = 0.00120304
+I1002 12:50:51.105725 32741 solver.cpp:244]     Train net output #32: softmax = 3.12887e-07
+I1002 12:50:51.105732 32741 solver.cpp:244]     Train net output #33: softmax = 0.998796
+I1002 12:50:51.105742 32741 solver.cpp:244]     Train net output #34: softmax = 5.35721e-07
+I1002 12:50:51.105753 32741 solver.cpp:244]     Train net output #35: softmax = 2.40047e-07
+I1002 12:50:51.105763 32741 solver.cpp:244]     Train net output #36: softmax = 0.101312
+I1002 12:50:51.105774 32741 solver.cpp:244]     Train net output #37: softmax = 0.0312399
+I1002 12:50:51.105784 32741 solver.cpp:244]     Train net output #38: softmax = 0.0591611
+I1002 12:50:51.105795 32741 solver.cpp:244]     Train net output #39: softmax = 0.753521
+I1002 12:50:51.105805 32741 solver.cpp:244]     Train net output #40: softmax = 0.0547659
+I1002 12:50:51.105816 32741 solver.cpp:244]     Train net output #41: softmax = 0.149661
+I1002 12:50:51.105828 32741 solver.cpp:244]     Train net output #42: softmax = 0.142052
+I1002 12:50:51.105837 32741 solver.cpp:244]     Train net output #43: softmax = 0.494551
+I1002 12:50:51.105849 32741 solver.cpp:244]     Train net output #44: softmax = 0.0483114
+I1002 12:50:51.105859 32741 solver.cpp:244]     Train net output #45: softmax = 0.165425
+I1002 12:50:51.105885 32741 solver.cpp:244]     Train net output #46: softmax = 0.534952
+I1002 12:50:51.105897 32741 solver.cpp:244]     Train net output #47: softmax = 0.000462451
+I1002 12:50:51.105907 32741 solver.cpp:244]     Train net output #48: softmax = 0.142003
+I1002 12:50:51.105916 32741 solver.cpp:244]     Train net output #49: softmax = 0.310769
+I1002 12:50:51.105923 32741 solver.cpp:244]     Train net output #50: softmax = 0.0118146
+I1002 12:50:51.105932 32741 solver.cpp:244]     Train net output #51: softmax = 0.256987
+I1002 12:50:51.105942 32741 solver.cpp:244]     Train net output #52: softmax = 0.497082
+I1002 12:50:51.105967 32741 solver.cpp:244]     Train net output #53: softmax = 0.169217
+I1002 12:50:51.105979 32741 solver.cpp:244]     Train net output #54: softmax = 0.0617874
+I1002 12:50:51.105988 32741 solver.cpp:244]     Train net output #55: softmax = 0.0149266
+I1002 12:50:51.105998 32741 solver.cpp:244]     Train net output #56: softmax = 7.32526e-08
+I1002 12:50:51.106009 32741 solver.cpp:244]     Train net output #57: softmax = 2.46735e-13
+I1002 12:50:51.106019 32741 solver.cpp:244]     Train net output #58: softmax = 0.999999
+I1002 12:50:51.106029 32741 solver.cpp:244]     Train net output #59: softmax = 7.78551e-07
+I1002 12:50:51.106040 32741 solver.cpp:244]     Train net output #60: softmax = 1.23402e-16
+I1002 12:50:51.106050 32741 solver.cpp:244]     Train net output #61: softmax = 0.0766697
+I1002 12:50:51.106060 32741 solver.cpp:244]     Train net output #62: softmax = 0.0819965
+I1002 12:50:51.106070 32741 solver.cpp:244]     Train net output #63: softmax = 0.471726
+I1002 12:50:51.106081 32741 solver.cpp:244]     Train net output #64: softmax = 0.234731
+I1002 12:50:51.106091 32741 solver.cpp:244]     Train net output #65: softmax = 0.134877
+I1002 12:50:51.106102 32741 solver.cpp:244]     Train net output #66: softmax = 0.0354048
+I1002 12:50:51.106112 32741 solver.cpp:244]     Train net output #67: softmax = 0.310517
+I1002 12:50:51.106122 32741 solver.cpp:244]     Train net output #68: softmax = 0.220815
+I1002 12:50:51.106132 32741 solver.cpp:244]     Train net output #69: softmax = 0.433025
+I1002 12:50:51.106143 32741 solver.cpp:244]     Train net output #70: softmax = 0.000239104
+I1002 12:50:51.106173 32741 solver.cpp:244]     Train net output #71: softmax = 0.097922
+I1002 12:50:51.106184 32741 solver.cpp:244]     Train net output #72: softmax = 0.00753462
+I1002 12:50:51.106192 32741 solver.cpp:244]     Train net output #73: softmax = 0.0925391
+I1002 12:50:51.106202 32741 solver.cpp:244]     Train net output #74: softmax = 0.785732
+I1002 12:50:51.106211 32741 solver.cpp:244]     Train net output #75: softmax = 0.0162718
+I1002 12:50:51.106221 32741 solver.cpp:244]     Train net output #76: softmax = 2.15019e-06
+I1002 12:50:51.106231 32741 solver.cpp:244]     Train net output #77: softmax = 7.63336e-09
+I1002 12:50:51.106242 32741 solver.cpp:244]     Train net output #78: softmax = 0.554765
+I1002 12:50:51.106252 32741 solver.cpp:244]     Train net output #79: softmax = 0.445233
+I1002 12:50:51.106263 32741 solver.cpp:244]     Train net output #80: softmax = 3.14397e-09
+I1002 12:50:51.106273 32741 solver.cpp:244]     Train net output #81: softmax = 1.16948e-11
+I1002 12:50:51.106283 32741 solver.cpp:244]     Train net output #82: softmax = 1.37163e-10
+I1002 12:50:51.106294 32741 solver.cpp:244]     Train net output #83: softmax = 0.999999
+I1002 12:50:51.106304 32741 solver.cpp:244]     Train net output #84: softmax = 2.62074e-09
+I1002 12:50:51.106314 32741 solver.cpp:244]     Train net output #85: softmax = 1.42624e-06
+I1002 12:50:51.106325 32741 solver.cpp:244]     Train net output #86: softmax = 0.518134
+I1002 12:50:51.106335 32741 solver.cpp:244]     Train net output #87: softmax = 0.0134832
+I1002 12:50:51.106345 32741 solver.cpp:244]     Train net output #88: softmax = 0.355538
+I1002 12:50:51.106356 32741 solver.cpp:244]     Train net output #89: softmax = 0.111562
+I1002 12:50:51.106366 32741 solver.cpp:244]     Train net output #90: softmax = 0.00128263
+I1002 12:50:51.106377 32741 solver.cpp:244]     Train net output #91: softmax = 3.35251e-09
+I1002 12:50:51.106396 32741 solver.cpp:244]     Train net output #92: softmax = 8.15084e-06
+I1002 12:50:51.106408 32741 solver.cpp:244]     Train net output #93: softmax = 0.464251
+I1002 12:50:51.106420 32741 solver.cpp:244]     Train net output #94: softmax = 0.535737
+I1002 12:50:51.106429 32741 solver.cpp:244]     Train net output #95: softmax = 4.03589e-06
+I1002 12:50:51.106441 32741 solver.cpp:244]     Train net output #96: softmax = 7.52103e-06
+I1002 12:50:51.106451 32741 solver.cpp:244]     Train net output #97: softmax = 0.0103432
+I1002 12:50:51.106462 32741 solver.cpp:244]     Train net output #98: softmax = 0.985963
+I1002 12:50:51.106472 32741 solver.cpp:244]     Train net output #99: softmax = 0.00036333
+I1002 12:50:51.106483 32741 solver.cpp:244]     Train net output #100: softmax = 0.00332329
+I1002 12:50:51.106499 32741 sgd_solver.cpp:106] Iteration 3, lr = 0.000299993
+I1002 12:50:57.099251 32741 heproot.cpp:20] Queuing data... (1 sec.)
+*** Aborted at 1506945058 (unix time) try "date -d @1506945058" if you are using GNU date ***
+PC: @     0x7ffe5b8d4a11 ([vdso]+0xa10)
+*** SIGTERM (@0x61fe000002cf) received by PID 32741 (TID 0x7f7cfa508b20) from PID 719; stack trace: ***
+    @       0x3e3620f7e0 (unknown)
+    @     0x7ffe5b8d4a11 ([vdso]+0xa10)
+    @       0x3e36603ea6 (unknown)
+    @     0x7f7cac3611de (unknown)
+    @     0x7f7cabd167ab (unknown)
+    @     0x7f7cabcf3e33 (unknown)
+    @     0x7f7cabcebb71 (unknown)
+    @     0x7f7cabcec8c6 (unknown)
+    @     0x7f7cabc5a3e2 (unknown)
+    @     0x7f7cabc5a53a (unknown)
+    @     0x7f7cabc3e005 cuMemcpy
+    @     0x7f7d13bed482 (unknown)
+    @     0x7f7d13bcfdb1 (unknown)
+    @     0x7f7d13bf39b8 cudaMemcpy
+    @     0x7f7d14120ace caffe::caffe_gpu_memcpy()
+    @     0x7f7d140ea46e caffe::SyncedMemory::to_gpu()
+    @     0x7f7d140e9919 caffe::SyncedMemory::gpu_data()
+    @     0x7f7d140f2d32 caffe::Blob<>::gpu_data()
+    @     0x7f7d1404433d caffe::BaseConvolutionLayer<>::forward_gpu_bias()
+    @     0x7f7d1412cb51 caffe::ConvolutionLayer<>::Forward_gpu()
+    @     0x7f7d14101a65 caffe::Net<>::ForwardFromTo()
+    @     0x7f7d14101dd7 caffe::Net<>::Forward()
+    @     0x7f7d13f99308 caffe::Solver<>::Step()
+    @     0x7f7d13f99bb9 caffe::Solver<>::Solve()
+    @           0x40b79a train()
+    @           0x40f05c main
+    @       0x3e3521ed5d (unknown)
+    @           0x409051 (unknown)
+./runCaffe.sh: line 1: 32741 Terminated              caffe train -gpu 0 -solver ConfFiles/solver.prototxt
+
+real	0m43.250s
+user	0m25.089s
+sys	0m19.412s
